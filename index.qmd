@@ -1,7 +1,36 @@
 ---
-title: "OptimizedTraining"
+title: "Home"
 ---
 
-This is a Quarto website.
+# Optimized Training
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Dashboard principale per monitorare allenamento, fatica, stress e recupero.
+
+## Stato manuale più recente
+
+| Metrica | Valore |
+| --- | --- |
+| Data | 2026-06-19 |
+| Stress mentale |  |
+| Caffeina mg |  |
+| Dolore |  |
+| Stretching minuti | 20 |
+| Mobilità media | 3.0 |
+
+## Red flags attive
+
+| Data | Flag | Severità | Dettaglio |
+| --- | --- | --- | --- |
+| 2026-06-19 | Nessuna red flag manuale attiva | green | Stress, dolore, caffeina e stretching non mostrano criticità manuali evidenti. |
+
+## Stress mentale
+
+Nessun dato stress ancora disponibile.
+
+## Stretching
+
+Nessuna seduta stretching ancora disponibile prima del 2026-06-19.
+
+## Dolore
+
+Nessun dato dolore ancora disponibile.
