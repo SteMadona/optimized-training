@@ -1,0 +1,7 @@
+---
+title: "Palestra"
+---
+
+# Palestra
+
+Log allenamenti, progressi su panca e trazione zavorrata, volume settimanale e massimali stimati.

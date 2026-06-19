@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+# Quarto
+.quarto/
+_site/
+
+# Data privati / grezzi
+data/raw/
+data/private/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+/.quarto/
+**/*.quarto_ipynb

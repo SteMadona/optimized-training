@@ -1,0 +1,7 @@
+---
+title: "Calcio"
+---
+
+# Calcio
+
+Carico cardiaco, tempo in zona alta, durata sedute e impatto sulla fatica.

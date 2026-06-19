@@ -1,0 +1,32 @@
+project:
+  type: website
+
+website:
+  title: "Optimized Training"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: pages/athlete-os.qmd
+        text: Athlete OS
+      - href: pages/palestra.qmd
+        text: Palestra
+      - href: pages/corsa.qmd
+        text: Corsa
+      - href: pages/calcio.qmd
+        text: Calcio
+      - href: pages/stretching.qmd
+        text: Stretching
+      - href: pages/red-flags.qmd
+        text: Red Flags
+      - href: about.qmd
+        text: About
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+
