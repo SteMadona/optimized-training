@@ -1,6 +1,6 @@
 zone,name,min_pct,max_pct,min_bpm,max_bpm,range_bpm
-Z1,Recupero,0.5,0.6,92,111,92–111
-Z2,Aerobica facile,0.6,0.7,111,130,111–130
-Z3,Aerobica media,0.7,0.8,130,148,130–148
-Z4,Soglia,0.8,0.9,148,166,148–166
-Z5,VO2max,0.9,1.0,166,185,166–185
+Z1,Recupero,0.5,0.6,92,111,92-111
+Z2,Aerobica facile,0.6,0.7,111,130,111-130
+Z3,Aerobica media,0.7,0.8,130,148,130-148
+Z4,Soglia,0.8,0.9,148,166,148-166
+Z5,VO2max,0.9,1.0,166,185,166-185

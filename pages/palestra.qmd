@@ -5,3 +5,249 @@ title: "Palestra"
 # Palestra
 
 Log allenamenti, progressi su panca e trazione zavorrata, volume settimanale e massimali stimati.
+
+```{python}
+import pandas as pd
+import plotly.express as px
+from pathlib import Path
+
+root = Path.cwd()
+if not (root / "data").exists() and (root.parent / "data").exists():
+    root = root.parent
+
+sets = pd.read_csv(root / "data" / "processed" / "strength_sets.csv")
+workouts = pd.read_csv(root / "data" / "processed" / "strength_workouts.csv")
+weekly = pd.read_csv(root / "data" / "processed" / "strength_weekly.csv")
+prs = pd.read_csv(root / "data" / "processed" / "strength_prs.csv")
+
+sets["date"] = pd.to_datetime(sets["date"])
+workouts["date"] = pd.to_datetime(workouts["date"])
+```
+
+## Sintesi
+
+```{python}
+summary = pd.DataFrame([
+    {"metrica": "Workout totali", "valore": workouts["workout_id"].nunique()},
+    {"metrica": "Set totali", "valore": len(sets)},
+    {"metrica": "Volume totale kg", "valore": round(sets["volume_kg"].sum(), 0)},
+    {"metrica": "Primo workout", "valore": workouts["date"].min().date()},
+    {"metrica": "Ultimo workout", "valore": workouts["date"].max().date()},
+])
+
+summary
+```
+
+## PR principali
+
+```{python}
+prs
+```
+
+## Volume settimanale
+
+```{python}
+fig = px.bar(
+    weekly,
+    x="week",
+    y="total_volume_kg",
+    title="Volume settimanale totale",
+    labels={
+        "week": "Settimana",
+        "total_volume_kg": "Volume kg",
+    },
+)
+fig.show()
+```
+
+## Frequenza palestra
+
+```{python}
+fig = px.bar(
+    weekly,
+    x="week",
+    y="workouts",
+    title="Workout palestra per settimana",
+    labels={
+        "week": "Settimana",
+        "workouts": "Workout",
+    },
+)
+fig.show()
+```
+
+## Panca — e1RM
+
+```{python}
+bench = sets[
+    (sets["exercise_category"] == "bench_press")
+    & (sets["is_working_set"] == True)
+    & sets["e1rm_kg"].notna()
+].copy()
+
+if bench.empty:
+    print("Nessun dato panca disponibile.")
+else:
+    bench_daily = (
+        bench
+        .groupby("date")
+        .agg(
+            best_e1rm_kg=("e1rm_kg", "max"),
+            top_weight_kg=("weight_kg", "max"),
+            total_volume_kg=("volume_kg", "sum"),
+        )
+        .reset_index()
+    )
+
+    fig = px.line(
+        bench_daily,
+        x="date",
+        y="best_e1rm_kg",
+        markers=True,
+        title="Panca — miglior e1RM per giorno",
+        labels={
+            "date": "Data",
+            "best_e1rm_kg": "e1RM kg",
+        },
+    )
+    fig.show()
+```
+
+## Panca — volume
+
+```{python}
+if bench.empty:
+    print("Nessun dato panca disponibile.")
+else:
+    bench_weekly = (
+        bench
+        .groupby("week")
+        .agg(
+            volume_kg=("volume_kg", "sum"),
+            sets=("set_id", "count"),
+        )
+        .reset_index()
+    )
+
+    fig = px.bar(
+        bench_weekly,
+        x="week",
+        y="volume_kg",
+        title="Panca — volume settimanale",
+        labels={
+            "week": "Settimana",
+            "volume_kg": "Volume kg",
+        },
+    )
+    fig.show()
+```
+
+## Trazione zavorrata — e1RM esterno
+
+```{python}
+pullup = sets[
+    (sets["exercise_category"] == "weighted_pullup")
+    & (sets["is_working_set"] == True)
+    & sets["external_e1rm_kg"].notna()
+].copy()
+
+if pullup.empty:
+    print("Nessun dato trazione zavorrata disponibile.")
+else:
+    pullup_daily = (
+        pullup
+        .groupby("date")
+        .agg(
+            best_external_e1rm_kg=("external_e1rm_kg", "max"),
+            best_total_e1rm_kg=("total_e1rm_kg", "max"),
+            top_external_load_kg=("external_load_kg", "max"),
+            top_total_load_kg=("total_load_kg", "max"),
+            total_volume_kg=("volume_kg", "sum"),
+        )
+        .reset_index()
+    )
+
+    fig = px.line(
+        pullup_daily,
+        x="date",
+        y="best_external_e1rm_kg",
+        markers=True,
+        title="Trazione zavorrata — miglior e1RM zavorra",
+        labels={
+            "date": "Data",
+            "best_external_e1rm_kg": "e1RM zavorra kg",
+        },
+    )
+    fig.show()
+```
+
+## Trazione zavorrata — carico totale
+
+```{python}
+if pullup.empty:
+    print("Nessun dato trazione zavorrata disponibile.")
+else:
+    fig = px.line(
+        pullup_daily,
+        x="date",
+        y="best_total_e1rm_kg",
+        markers=True,
+        title="Trazione zavorrata — miglior e1RM carico totale",
+        labels={
+            "date": "Data",
+            "best_total_e1rm_kg": "e1RM carico totale kg",
+        },
+    )
+    fig.show()
+```
+
+## Power Clean
+
+```{python}
+clean = sets[
+    (sets["exercise_category"] == "power_clean")
+    & (sets["is_working_set"] == True)
+    & sets["e1rm_kg"].notna()
+].copy()
+
+if clean.empty:
+    print("Nessun dato power clean disponibile.")
+else:
+    clean_daily = (
+        clean
+        .groupby("date")
+        .agg(
+            best_e1rm_kg=("e1rm_kg", "max"),
+            top_weight_kg=("weight_kg", "max"),
+            total_volume_kg=("volume_kg", "sum"),
+        )
+        .reset_index()
+    )
+
+    fig = px.line(
+        clean_daily,
+        x="date",
+        y="top_weight_kg",
+        markers=True,
+        title="Power Clean — miglior carico per giorno",
+        labels={
+            "date": "Data",
+            "top_weight_kg": "Carico kg",
+        },
+    )
+    fig.show()
+```
+
+## Ultimi workout
+
+```{python}
+workouts.sort_values("date", ascending=False).head(20)
+```
+
+## Ultimi set panca/trazioni
+
+```{python}
+sets[
+    sets["exercise_category"].isin(["bench_press", "weighted_pullup", "power_clean"])
+].sort_values("date", ascending=False).head(50)
+```

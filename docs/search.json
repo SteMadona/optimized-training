@@ -39,7 +39,84 @@
     "href": "pages/palestra.html",
     "title": "Palestra",
     "section": "",
-    "text": "Palestra\nLog allenamenti, progressi su panca e trazione zavorrata, volume settimanale e massimali stimati."
+    "text": "Log allenamenti, progressi su panca e trazione zavorrata, volume settimanale e massimali stimati.\n\nimport pandas as pd\nimport plotly.express as px\nfrom pathlib import Path\n\nroot = Path.cwd()\nif not (root / \"data\").exists() and (root.parent / \"data\").exists():\n    root = root.parent\n\nsets = pd.read_csv(root / \"data\" / \"processed\" / \"strength_sets.csv\")\nworkouts = pd.read_csv(root / \"data\" / \"processed\" / \"strength_workouts.csv\")\nweekly = pd.read_csv(root / \"data\" / \"processed\" / \"strength_weekly.csv\")\nprs = pd.read_csv(root / \"data\" / \"processed\" / \"strength_prs.csv\")\n\nsets[\"date\"] = pd.to_datetime(sets[\"date\"])\nworkouts[\"date\"] = pd.to_datetime(workouts[\"date\"])\n\n\n\n\nsummary = pd.DataFrame([\n    {\"metrica\": \"Workout totali\", \"valore\": workouts[\"workout_id\"].nunique()},\n    {\"metrica\": \"Set totali\", \"valore\": len(sets)},\n    {\"metrica\": \"Volume totale kg\", \"valore\": round(sets[\"volume_kg\"].sum(), 0)},\n    {\"metrica\": \"Primo workout\", \"valore\": workouts[\"date\"].min().date()},\n    {\"metrica\": \"Ultimo workout\", \"valore\": workouts[\"date\"].max().date()},\n])\n\nsummary\n\n\n\n\n\nprs\n\n\n\n\n\nfig = px.bar(\n    weekly,\n    x=\"week\",\n    y=\"total_volume_kg\",\n    title=\"Volume settimanale totale\",\n    labels={\n        \"week\": \"Settimana\",\n        \"total_volume_kg\": \"Volume kg\",\n    },\n)\nfig.show()\n\n\n\n\n\nfig = px.bar(\n    weekly,\n    x=\"week\",\n    y=\"workouts\",\n    title=\"Workout palestra per settimana\",\n    labels={\n        \"week\": \"Settimana\",\n        \"workouts\": \"Workout\",\n    },\n)\nfig.show()\n\n\n\n\n\nbench = sets[\n    (sets[\"exercise_category\"] == \"bench_press\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"e1rm_kg\"].notna()\n].copy()\n\nif bench.empty:\n    print(\"Nessun dato panca disponibile.\")\nelse:\n    bench_daily = (\n        bench\n        .groupby(\"date\")\n        .agg(\n            best_e1rm_kg=(\"e1rm_kg\", \"max\"),\n            top_weight_kg=(\"weight_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        bench_daily,\n        x=\"date\",\n        y=\"best_e1rm_kg\",\n        markers=True,\n        title=\"Panca — miglior e1RM per giorno\",\n        labels={\n            \"date\": \"Data\",\n            \"best_e1rm_kg\": \"e1RM kg\",\n        },\n    )\n    fig.show()\n\n\n\n\n\nif bench.empty:\n    print(\"Nessun dato panca disponibile.\")\nelse:\n    bench_weekly = (\n        bench\n        .groupby(\"week\")\n        .agg(\n            volume_kg=(\"volume_kg\", \"sum\"),\n            sets=(\"set_id\", \"count\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.bar(\n        bench_weekly,\n        x=\"week\",\n        y=\"volume_kg\",\n        title=\"Panca — volume settimanale\",\n        labels={\n            \"week\": \"Settimana\",\n            \"volume_kg\": \"Volume kg\",\n        },\n    )\n    fig.show()\n\n\n\n\n\npullup = sets[\n    (sets[\"exercise_category\"] == \"weighted_pullup\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"external_e1rm_kg\"].notna()\n].copy()\n\nif pullup.empty:\n    print(\"Nessun dato trazione zavorrata disponibile.\")\nelse:\n    pullup_daily = (\n        pullup\n        .groupby(\"date\")\n        .agg(\n            best_external_e1rm_kg=(\"external_e1rm_kg\", \"max\"),\n            best_total_e1rm_kg=(\"total_e1rm_kg\", \"max\"),\n            top_external_load_kg=(\"external_load_kg\", \"max\"),\n            top_total_load_kg=(\"total_load_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        pullup_daily,\n        x=\"date\",\n        y=\"best_external_e1rm_kg\",\n        markers=True,\n        title=\"Trazione zavorrata — miglior e1RM zavorra\",\n        labels={\n            \"date\": \"Data\",\n            \"best_external_e1rm_kg\": \"e1RM zavorra kg\",\n        },\n    )\n    fig.show()\n\n\n\n\n\nif pullup.empty:\n    print(\"Nessun dato trazione zavorrata disponibile.\")\nelse:\n    fig = px.line(\n        pullup_daily,\n        x=\"date\",\n        y=\"best_total_e1rm_kg\",\n        markers=True,\n        title=\"Trazione zavorrata — miglior e1RM carico totale\",\n        labels={\n            \"date\": \"Data\",\n            \"best_total_e1rm_kg\": \"e1RM carico totale kg\",\n        },\n    )\n    fig.show()\n\n\n\n\n\nclean = sets[\n    (sets[\"exercise_category\"] == \"power_clean\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"e1rm_kg\"].notna()\n].copy()\n\nif clean.empty:\n    print(\"Nessun dato power clean disponibile.\")\nelse:\n    clean_daily = (\n        clean\n        .groupby(\"date\")\n        .agg(\n            best_e1rm_kg=(\"e1rm_kg\", \"max\"),\n            top_weight_kg=(\"weight_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        clean_daily,\n        x=\"date\",\n        y=\"top_weight_kg\",\n        markers=True,\n        title=\"Power Clean — miglior carico per giorno\",\n        labels={\n            \"date\": \"Data\",\n            \"top_weight_kg\": \"Carico kg\",\n        },\n    )\n    fig.show()\n\n\n\n\n\nworkouts.sort_values(\"date\", ascending=False).head(20)\n\n\n\n\n\nsets[\n    sets[\"exercise_category\"].isin([\"bench_press\", \"weighted_pullup\", \"power_clean\"])\n].sort_values(\"date\", ascending=False).head(50)"
+  },
+  {
+    "objectID": "pages/palestra.html#sintesi",
+    "href": "pages/palestra.html#sintesi",
+    "title": "Palestra",
+    "section": "",
+    "text": "summary = pd.DataFrame([\n    {\"metrica\": \"Workout totali\", \"valore\": workouts[\"workout_id\"].nunique()},\n    {\"metrica\": \"Set totali\", \"valore\": len(sets)},\n    {\"metrica\": \"Volume totale kg\", \"valore\": round(sets[\"volume_kg\"].sum(), 0)},\n    {\"metrica\": \"Primo workout\", \"valore\": workouts[\"date\"].min().date()},\n    {\"metrica\": \"Ultimo workout\", \"valore\": workouts[\"date\"].max().date()},\n])\n\nsummary"
+  },
+  {
+    "objectID": "pages/palestra.html#pr-principali",
+    "href": "pages/palestra.html#pr-principali",
+    "title": "Palestra",
+    "section": "",
+    "text": "prs"
+  },
+  {
+    "objectID": "pages/palestra.html#volume-settimanale",
+    "href": "pages/palestra.html#volume-settimanale",
+    "title": "Palestra",
+    "section": "",
+    "text": "fig = px.bar(\n    weekly,\n    x=\"week\",\n    y=\"total_volume_kg\",\n    title=\"Volume settimanale totale\",\n    labels={\n        \"week\": \"Settimana\",\n        \"total_volume_kg\": \"Volume kg\",\n    },\n)\nfig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#frequenza-palestra",
+    "href": "pages/palestra.html#frequenza-palestra",
+    "title": "Palestra",
+    "section": "",
+    "text": "fig = px.bar(\n    weekly,\n    x=\"week\",\n    y=\"workouts\",\n    title=\"Workout palestra per settimana\",\n    labels={\n        \"week\": \"Settimana\",\n        \"workouts\": \"Workout\",\n    },\n)\nfig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#panca-e1rm",
+    "href": "pages/palestra.html#panca-e1rm",
+    "title": "Palestra",
+    "section": "",
+    "text": "bench = sets[\n    (sets[\"exercise_category\"] == \"bench_press\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"e1rm_kg\"].notna()\n].copy()\n\nif bench.empty:\n    print(\"Nessun dato panca disponibile.\")\nelse:\n    bench_daily = (\n        bench\n        .groupby(\"date\")\n        .agg(\n            best_e1rm_kg=(\"e1rm_kg\", \"max\"),\n            top_weight_kg=(\"weight_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        bench_daily,\n        x=\"date\",\n        y=\"best_e1rm_kg\",\n        markers=True,\n        title=\"Panca — miglior e1RM per giorno\",\n        labels={\n            \"date\": \"Data\",\n            \"best_e1rm_kg\": \"e1RM kg\",\n        },\n    )\n    fig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#panca-volume",
+    "href": "pages/palestra.html#panca-volume",
+    "title": "Palestra",
+    "section": "",
+    "text": "if bench.empty:\n    print(\"Nessun dato panca disponibile.\")\nelse:\n    bench_weekly = (\n        bench\n        .groupby(\"week\")\n        .agg(\n            volume_kg=(\"volume_kg\", \"sum\"),\n            sets=(\"set_id\", \"count\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.bar(\n        bench_weekly,\n        x=\"week\",\n        y=\"volume_kg\",\n        title=\"Panca — volume settimanale\",\n        labels={\n            \"week\": \"Settimana\",\n            \"volume_kg\": \"Volume kg\",\n        },\n    )\n    fig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#trazione-zavorrata-e1rm-esterno",
+    "href": "pages/palestra.html#trazione-zavorrata-e1rm-esterno",
+    "title": "Palestra",
+    "section": "",
+    "text": "pullup = sets[\n    (sets[\"exercise_category\"] == \"weighted_pullup\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"external_e1rm_kg\"].notna()\n].copy()\n\nif pullup.empty:\n    print(\"Nessun dato trazione zavorrata disponibile.\")\nelse:\n    pullup_daily = (\n        pullup\n        .groupby(\"date\")\n        .agg(\n            best_external_e1rm_kg=(\"external_e1rm_kg\", \"max\"),\n            best_total_e1rm_kg=(\"total_e1rm_kg\", \"max\"),\n            top_external_load_kg=(\"external_load_kg\", \"max\"),\n            top_total_load_kg=(\"total_load_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        pullup_daily,\n        x=\"date\",\n        y=\"best_external_e1rm_kg\",\n        markers=True,\n        title=\"Trazione zavorrata — miglior e1RM zavorra\",\n        labels={\n            \"date\": \"Data\",\n            \"best_external_e1rm_kg\": \"e1RM zavorra kg\",\n        },\n    )\n    fig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#trazione-zavorrata-carico-totale",
+    "href": "pages/palestra.html#trazione-zavorrata-carico-totale",
+    "title": "Palestra",
+    "section": "",
+    "text": "if pullup.empty:\n    print(\"Nessun dato trazione zavorrata disponibile.\")\nelse:\n    fig = px.line(\n        pullup_daily,\n        x=\"date\",\n        y=\"best_total_e1rm_kg\",\n        markers=True,\n        title=\"Trazione zavorrata — miglior e1RM carico totale\",\n        labels={\n            \"date\": \"Data\",\n            \"best_total_e1rm_kg\": \"e1RM carico totale kg\",\n        },\n    )\n    fig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#power-clean",
+    "href": "pages/palestra.html#power-clean",
+    "title": "Palestra",
+    "section": "",
+    "text": "clean = sets[\n    (sets[\"exercise_category\"] == \"power_clean\")\n    & (sets[\"is_working_set\"] == True)\n    & sets[\"e1rm_kg\"].notna()\n].copy()\n\nif clean.empty:\n    print(\"Nessun dato power clean disponibile.\")\nelse:\n    clean_daily = (\n        clean\n        .groupby(\"date\")\n        .agg(\n            best_e1rm_kg=(\"e1rm_kg\", \"max\"),\n            top_weight_kg=(\"weight_kg\", \"max\"),\n            total_volume_kg=(\"volume_kg\", \"sum\"),\n        )\n        .reset_index()\n    )\n\n    fig = px.line(\n        clean_daily,\n        x=\"date\",\n        y=\"top_weight_kg\",\n        markers=True,\n        title=\"Power Clean — miglior carico per giorno\",\n        labels={\n            \"date\": \"Data\",\n            \"top_weight_kg\": \"Carico kg\",\n        },\n    )\n    fig.show()"
+  },
+  {
+    "objectID": "pages/palestra.html#ultimi-workout",
+    "href": "pages/palestra.html#ultimi-workout",
+    "title": "Palestra",
+    "section": "",
+    "text": "workouts.sort_values(\"date\", ascending=False).head(20)"
+  },
+  {
+    "objectID": "pages/palestra.html#ultimi-set-pancatrazioni",
+    "href": "pages/palestra.html#ultimi-set-pancatrazioni",
+    "title": "Palestra",
+    "section": "",
+    "text": "sets[\n    sets[\"exercise_category\"].isin([\"bench_press\", \"weighted_pullup\", \"power_clean\"])\n].sort_values(\"date\", ascending=False).head(50)"
   },
   {
     "objectID": "pages/calcio.html",

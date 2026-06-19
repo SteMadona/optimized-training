@@ -1,0 +1,11 @@
+exercise_category,pr_type,date,exercise_title,weight_kg,reps,e1rm_kg,total_load_kg,total_e1rm_kg
+bench_press,max_load,2025-07-17,Bench Press (Barbell),95.0,1,98.17,95.0,98.17
+bench_press,best_e1rm,2025-07-17,Bench Press (Barbell),95.0,1,98.17,95.0,98.17
+weighted_pullup,max_load,2025-12-22,Pull Up (Weighted),35.0,1,39.0,120.1,124.1
+weighted_pullup,best_e1rm,2025-12-22,Pull Up (Weighted),35.0,1,39.0,120.1,124.1
+power_clean,max_load,2026-02-09,Power Clean,60.0,2,64.0,60.0,64.0
+power_clean,best_e1rm,2026-02-09,Power Clean,60.0,2,64.0,60.0,64.0
+squat,max_load,2025-03-03,Squat (Barbell),115.0,3,126.5,115.0,126.5
+squat,best_e1rm,2025-03-03,Squat (Barbell),115.0,3,126.5,115.0,126.5
+deadlift,max_load,2026-04-23,Sumo Deadlift,160.0,1,165.33,160.0,165.33
+deadlift,best_e1rm,2026-04-23,Sumo Deadlift,160.0,1,165.33,160.0,165.33

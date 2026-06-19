@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: docs
 
+execute:
+  enabled: false
+
 website:
   title: "Optimized Training"
   navbar:
