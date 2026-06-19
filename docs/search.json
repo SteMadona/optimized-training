@@ -39,7 +39,35 @@
     "href": "pages/athlete-os.html",
     "title": "Athlete OS",
     "section": "",
-    "text": "Athlete OS\nProfilo atleta, forza relativa, stato aerobico, composizione corporea, stress e fatica."
+    "text": "Questa pagina riassume il profilo atleta, la forza relativa, le zone cardio e le prime metriche di riferimento.\n\n\n\n\n\nMetriica\nValore\nUnità\nCategoria\n\n\n\n\nEtà\n24.0\nanni\nProfilo\n\n\nAltezza\n191.0\ncm\nProfilo\n\n\nPeso corporeo\n85.1\nkg\nProfilo\n\n\nBMI\n23.33\n\nComposizione corporea\n\n\nFC max stimata\n185.0\nbpm\nCardio\n\n\n\n\n\n\n\n\n\nMetriica\nValore\nUnità\nCategoria\n\n\n\n\nPanca 1RM\n95.0\nkg\nForza\n\n\nPanca / peso corporeo\n1.12\nxBW\nForza relativa\n\n\nTrazione zavorrata 1RM\n30.0\nkg esterni\nForza\n\n\nTrazione carico totale\n115.1\nkg\nForza\n\n\nTrazione carico totale / peso corporeo\n1.35\nxBW\nForza relativa\n\n\nSquat 1RM\n120.0\nkg\nForza - storico\n\n\nSquat / peso corporeo\n1.41\nxBW\nForza relativa - storico\n\n\nStacco sumo 1RM\n160.0\nkg\nForza - storico\n\n\nStacco sumo / peso corporeo\n1.88\nxBW\nForza relativa - storico\n\n\n\n\n\n\n\n\n\nZona\nNome\nIntervallo\n\n\n\n\nZ1\nRecupero\n92–111 bpm\n\n\nZ2\nAerobica facile\n111–130 bpm\n\n\nZ3\nAerobica media\n130–148 bpm\n\n\nZ4\nSoglia\n148–166 bpm\n\n\nZ5\nVO2max\n166–185 bpm\n\n\n\n\n\n\nPeso corporeo attuale: 85.1 kg\nPanca relativa: 1.12x BW\nTrazione carico totale relativa: 1.35x BW"
+  },
+  {
+    "objectID": "pages/athlete-os.html#profilo-atleta",
+    "href": "pages/athlete-os.html#profilo-atleta",
+    "title": "Athlete OS",
+    "section": "",
+    "text": "Metriica\nValore\nUnità\nCategoria\n\n\n\n\nEtà\n24.0\nanni\nProfilo\n\n\nAltezza\n191.0\ncm\nProfilo\n\n\nPeso corporeo\n85.1\nkg\nProfilo\n\n\nBMI\n23.33\n\nComposizione corporea\n\n\nFC max stimata\n185.0\nbpm\nCardio"
+  },
+  {
+    "objectID": "pages/athlete-os.html#forza",
+    "href": "pages/athlete-os.html#forza",
+    "title": "Athlete OS",
+    "section": "",
+    "text": "Metriica\nValore\nUnità\nCategoria\n\n\n\n\nPanca 1RM\n95.0\nkg\nForza\n\n\nPanca / peso corporeo\n1.12\nxBW\nForza relativa\n\n\nTrazione zavorrata 1RM\n30.0\nkg esterni\nForza\n\n\nTrazione carico totale\n115.1\nkg\nForza\n\n\nTrazione carico totale / peso corporeo\n1.35\nxBW\nForza relativa\n\n\nSquat 1RM\n120.0\nkg\nForza - storico\n\n\nSquat / peso corporeo\n1.41\nxBW\nForza relativa - storico\n\n\nStacco sumo 1RM\n160.0\nkg\nForza - storico\n\n\nStacco sumo / peso corporeo\n1.88\nxBW\nForza relativa - storico"
+  },
+  {
+    "objectID": "pages/athlete-os.html#zone-cardio",
+    "href": "pages/athlete-os.html#zone-cardio",
+    "title": "Athlete OS",
+    "section": "",
+    "text": "Zona\nNome\nIntervallo\n\n\n\n\nZ1\nRecupero\n92–111 bpm\n\n\nZ2\nAerobica facile\n111–130 bpm\n\n\nZ3\nAerobica media\n130–148 bpm\n\n\nZ4\nSoglia\n148–166 bpm\n\n\nZ5\nVO2max\n166–185 bpm"
+  },
+  {
+    "objectID": "pages/athlete-os.html#sintesi-iniziale",
+    "href": "pages/athlete-os.html#sintesi-iniziale",
+    "title": "Athlete OS",
+    "section": "",
+    "text": "Peso corporeo attuale: 85.1 kg\nPanca relativa: 1.12x BW\nTrazione carico totale relativa: 1.35x BW"
   },
   {
     "objectID": "pages/corsa.html",

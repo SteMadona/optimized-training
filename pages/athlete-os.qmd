@@ -4,4 +4,46 @@ title: "Athlete OS"
 
 # Athlete OS
 
-Profilo atleta, forza relativa, stato aerobico, composizione corporea, stress e fatica.
+Questa pagina riassume il profilo atleta, la forza relativa, le zone cardio e le prime metriche di riferimento.
+
+## Profilo atleta
+
+| Metriica | Valore | Unità | Categoria |
+| --- | ---: | --- | --- |
+| Età | 24.0 | anni | Profilo |
+| Altezza | 191.0 | cm | Profilo |
+| Peso corporeo | 85.1 | kg | Profilo |
+| BMI | 23.33 |  | Composizione corporea |
+| FC max stimata | 185.0 | bpm | Cardio |
+
+## Forza
+
+| Metriica | Valore | Unità | Categoria |
+| --- | ---: | --- | --- |
+| Panca 1RM | 95.0 | kg | Forza |
+| Panca / peso corporeo | 1.12 | xBW | Forza relativa |
+| Trazione zavorrata 1RM | 30.0 | kg esterni | Forza |
+| Trazione carico totale | 115.1 | kg | Forza |
+| Trazione carico totale / peso corporeo | 1.35 | xBW | Forza relativa |
+| Squat 1RM | 120.0 | kg | Forza - storico |
+| Squat / peso corporeo | 1.41 | xBW | Forza relativa - storico |
+| Stacco sumo 1RM | 160.0 | kg | Forza - storico |
+| Stacco sumo / peso corporeo | 1.88 | xBW | Forza relativa - storico |
+
+## Zone cardio
+
+| Zona | Nome | Intervallo |
+| --- | --- | --- |
+| Z1 | Recupero | 92–111 bpm |
+| Z2 | Aerobica facile | 111–130 bpm |
+| Z3 | Aerobica media | 130–148 bpm |
+| Z4 | Soglia | 148–166 bpm |
+| Z5 | VO2max | 166–185 bpm |
+
+## Sintesi iniziale
+
+Peso corporeo attuale: 85.1 kg
+
+Panca relativa: 1.12x BW
+
+Trazione carico totale relativa: 1.35x BW

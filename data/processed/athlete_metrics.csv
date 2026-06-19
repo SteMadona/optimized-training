@@ -1,0 +1,15 @@
+metric,value,unit,category
+Età,24.0,anni,Profilo
+Altezza,191.0,cm,Profilo
+Peso corporeo,85.1,kg,Profilo
+BMI,23.33,,Composizione corporea
+FC max stimata,185.0,bpm,Cardio
+Panca 1RM,95.0,kg,Forza
+Panca / peso corporeo,1.12,xBW,Forza relativa
+Trazione zavorrata 1RM,30.0,kg esterni,Forza
+Trazione carico totale,115.1,kg,Forza
+Trazione carico totale / peso corporeo,1.35,xBW,Forza relativa
+Squat 1RM,120.0,kg,Forza - storico
+Squat / peso corporeo,1.41,xBW,Forza relativa - storico
+Stacco sumo 1RM,160.0,kg,Forza - storico
+Stacco sumo / peso corporeo,1.88,xBW,Forza relativa - storico
